@@ -1,2 +1,2 @@
-# OsamaAbdelnabyAlaam
+# Osama Alaam
 My Personal Profile
