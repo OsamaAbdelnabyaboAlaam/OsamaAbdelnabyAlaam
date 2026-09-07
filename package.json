@@ -1,0 +1,23 @@
+{
+  "name": "osama-portfolio",
+  "version": "1.0.0",
+  "description": "My Personal Profile",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OsamaAbdelnabyaboAlaam/OsamaAbdelnabyAlaam.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OsamaAbdelnabyaboAlaam/OsamaAbdelnabyAlaam/issues"
+  },
+  "homepage": "https://github.com/OsamaAbdelnabyaboAlaam/OsamaAbdelnabyAlaam#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

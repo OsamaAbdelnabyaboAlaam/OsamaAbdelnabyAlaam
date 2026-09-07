@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>لوحة التحكم | أسامة عبد النبي علام</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header><div class="container nav">
+  <div class="brand">أسامة عبد النبي علام</div>
+  <nav><ul>
+    <li><a href="index.html">الرئيسية</a></li>
+    <li><a href="projects.html">المشاريع</a></li>
+    <li><a href="skills.html">المهارات</a></li>
+    <li><a href="contact.html">تواصل</a></li>
+    <li><a href="admin.html">لوحة التحكم</a></li>
+  </ul></nav>
+</div></header>
+<main><div class="container">
+<h2 class="section">إضافة مشروع</h2>
+<form id="pf">
+  <div class="msg" id="pm"></div>
+  <div><label>العنوان</label><input id="ptitle" required></div>
+  <div><label>الوصف</label><textarea id="pdesc" required></textarea></div>
+  <div><label>التقنيات (مفصولة بفاصلة)</label><input id="ptech"></div>
+  <div><label>الرابط</label><input id="purl"></div>
+  <button class="btn">إضافة</button>
+</form>
+<h2 class="section">إضافة مهارة</h2>
+<form id="sf">
+  <div class="msg" id="sm"></div>
+  <div><label>الاسم</label><input id="sname" required></div>
+  <div><label>المستوى (0-100)</label><input id="slevel" type="number" min="0" max="100" value="70"></div>
+  <div><label>التصنيف</label><input id="scat" value="عام"></div>
+  <button class="btn">إضافة</button>
+</form>
+<h2 class="section">الرسائل الواردة</h2>
+<div class="grid" id="msgs"><p class="loading">جارِ التحميل…</p></div>
+</div></main>
+<footer><div class="container">© 2026 أسامة عبد النبي علام — مبني بـ Node.js + Express + SQLite</div></footer>
+<script src="app.js"></script>
+<script>
+async function post(url, data, box, ok){
+  const r = await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+  const j = await r.json();
+  box.className = r.ok ? 'msg ok' : 'msg err';
+  box.textContent = r.ok ? ok : (j.error||'خطأ');
+  return r.ok;
+}
+pf.addEventListener('submit', async e=>{e.preventDefault();
+  if(await post('/api/projects',{title:ptitle.value,description:pdesc.value,tech:ptech.value,url:purl.value},pm,'تمت إضافة المشروع ✅')) e.target.reset();});
+sf.addEventListener('submit', async e=>{e.preventDefault();
+  if(await post('/api/skills',{name:sname.value,level:slevel.value,category:scat.value},sm,'تمت إضافة المهارة ✅')) e.target.reset();});
+(async()=>{const list=await api('/messages');
+  msgs.innerHTML = list.length ? list.map(m=>`<div class="card"><h3>${m.name}</h3><p class="muted">${m.email} — ${m.created_at}</p><p style="margin-top:8px">${m.body}</p></div>`).join('') : '<p class="loading">لا توجد رسائل.</p>';})();</script>
+</body></html>

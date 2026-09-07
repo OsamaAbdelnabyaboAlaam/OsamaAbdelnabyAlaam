@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>تواصل | أسامة عبد النبي علام</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header><div class="container nav">
+  <div class="brand">أسامة عبد النبي علام</div>
+  <nav><ul>
+    <li><a href="index.html">الرئيسية</a></li>
+    <li><a href="projects.html">المشاريع</a></li>
+    <li><a href="skills.html">المهارات</a></li>
+    <li><a href="contact.html">تواصل</a></li>
+    <li><a href="admin.html">لوحة التحكم</a></li>
+  </ul></nav>
+</div></header>
+<main><div class="container">
+<h2 class="section">أرسل لي رسالة</h2>
+<p class="muted">الرسائل تُحفظ فعلياً في قاعدة البيانات.</p>
+<form id="f" style="margin-top:16px">
+  <div class="msg" id="m"></div>
+  <div><label for="name">الاسم</label><input id="name" name="name" required></div>
+  <div><label for="email">البريد الإلكتروني</label><input id="email" name="email" type="email" required></div>
+  <div><label for="body">الرسالة</label><textarea id="body" name="body" required></textarea></div>
+  <button class="btn" type="submit">إرسال</button>
+</form>
+</div></main>
+<footer><div class="container">© 2026 أسامة عبد النبي علام — مبني بـ Node.js + Express + SQLite</div></footer>
+<script src="app.js"></script>
+<script>
+document.getElementById('f').addEventListener('submit', async e => {
+  e.preventDefault();
+  const m = document.getElementById('m');
+  const data = { name: name.value, email: email.value, body: body.value };
+  const r = await fetch('/api/messages', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+  const j = await r.json();
+  if (r.ok) { m.className='msg ok'; m.textContent='تم إرسال رسالتك بنجاح ✅'; e.target.reset(); }
+  else { m.className='msg err'; m.textContent = j.error || 'حدث خطأ'; }
+});</script>
+</body></html>
