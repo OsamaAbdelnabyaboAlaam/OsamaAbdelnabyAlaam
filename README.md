@@ -30,3 +30,19 @@ server/db.js      # SQLite schema + seed
 public/           # الصفحات و CSS و JS
 data/app.db       # قاعدة البيانات (تُنشأ تلقائياً)
 ```
+
+## النشر على Render (لينك دائم)
+
+الريبو جاهز للنشر — ملف `render.yaml` موجود.
+
+### الخطوات
+1. افتح https://dashboard.render.com وسجّل الدخول بحساب GitHub.
+2. اضغط **New +** → **Blueprint**.
+3. اختر ريبو `OsamaAbdelnabyaboAlaam/OsamaAbdelnabyAlaam` والفرع `arena/01a07db7-osamaabdelnabyalaam`.
+4. Render يقرأ `render.yaml` تلقائياً → اضغط **Apply**.
+5. بعد ~2 دقيقة يعطيك لينك دائم مثل `https://osama-portfolio.onrender.com`.
+
+### ملاحظات
+- `DATA_DIR=/var/data` يوجّه SQLite إلى قرص دائم حتى لا تُفقد البيانات عند إعادة النشر.
+- الخطة المجانية تُنيم الخدمة بعد فترة خمول؛ أول زيارة قد تستغرق ~30 ثانية.
+- `healthCheckPath: /api/health` يستخدمه Render للتأكد أن الخدمة حية.

@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: osama-portfolio
+    runtime: node
+    plan: free
+    region: frankfurt
+    branch: arena/01a07db7-osamaabdelnabyalaam
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: DATA_DIR
+        value: /var/data
+    disk:
+      name: sqlite-data
+      mountPath: /var/data
+      sizeGB: 1
