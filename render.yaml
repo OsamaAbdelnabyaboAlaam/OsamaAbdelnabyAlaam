@@ -2,16 +2,12 @@ databases:
   - name: osama-db
     databaseName: osama
     user: osama
-    plan: free
-    region: frankfurt
 
 services:
   - type: web
     name: osama-portfolio
-    runtime: node
+    env: node
     plan: free
-    region: frankfurt
-    branch: arena/01a07db7-osamaabdelnabyalaam
     buildCommand: npm install
     startCommand: npm start
     healthCheckPath: /api/health
