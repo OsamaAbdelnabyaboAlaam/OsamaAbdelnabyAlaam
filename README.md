@@ -33,16 +33,31 @@ data/app.db       # قاعدة البيانات (تُنشأ تلقائياً)
 
 ## النشر على Render (لينك دائم)
 
-الريبو جاهز للنشر — ملف `render.yaml` موجود.
+الريبو جاهز — ملف `render.yaml` موجود.
 
 ### الخطوات
 1. افتح https://dashboard.render.com وسجّل الدخول بحساب GitHub.
-2. اضغط **New +** → **Blueprint**.
+2. **New +** → **Blueprint**.
 3. اختر ريبو `OsamaAbdelnabyaboAlaam/OsamaAbdelnabyAlaam` والفرع `arena/01a07db7-osamaabdelnabyalaam`.
-4. Render يقرأ `render.yaml` تلقائياً → اضغط **Apply**.
+4. Render يقرأ `render.yaml` تلقائياً → **Apply**.
 5. بعد ~2 دقيقة يعطيك لينك دائم مثل `https://osama-portfolio.onrender.com`.
 
-### ملاحظات
-- `DATA_DIR=/var/data` يوجّه SQLite إلى قرص دائم حتى لا تُفقد البيانات عند إعادة النشر.
-- الخطة المجانية تُنيم الخدمة بعد فترة خمول؛ أول زيارة قد تستغرق ~30 ثانية.
-- `healthCheckPath: /api/health` يستخدمه Render للتأكد أن الخدمة حية.
+### ملاحظات على الخطة المجانية
+- **لا تدعم الأقراص الدائمة (disks)**، لذلك `DATA_DIR=/tmp/data`.
+  الموقع يعمل بالكامل، لكن ما يُضاف عبر لوحة التحكم (مشاريع/مهارات/رسائل)
+  يُفقد عند إعادة النشر أو الاستيقاظ من الخمول، وتعود البيانات الأولية.
+- الخدمة تنام بعد فترة خمول؛ أول زيارة تستغرق ~30 ثانية.
+
+### لتخزين دائم للبيانات
+ارفع الخطة إلى `starter` وأضف في `render.yaml`:
+
+```yaml
+    plan: starter
+    disk:
+      name: sqlite-data
+      mountPath: /var/data
+      sizeGB: 1
+```
+وغيّر `DATA_DIR` إلى `/var/data`.
+
+بديل مجاني آخر: استخدم قاعدة بيانات Postgres مجانية على Render وحوّل `server/db.js` إليها.
